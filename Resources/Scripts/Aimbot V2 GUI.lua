@@ -302,8 +302,8 @@ FunctionsSection:AddButton({
 })
 
 local function ResetWallhackSettings()
-  Settings.WallhackOutlineColor = Color3.fromRGB(255,0,0)
-  Settings.WallhackFillColor = Color3.fromRGB(255,0,0)
+  Settings.WallhackOutlineColor = {R = 255, G = 0, B = 0}
+  Settings.WallhackFillColor = {R = 255, G = 0, B = 0}
   Settings.WallhackOutlineTransparency = 0
   Settings.WallhackFillTransparency = 0.9
 end
@@ -380,14 +380,30 @@ while task.wait(0.1) do
                         NewWallhackHighlight.Parent = WallhackCharacter
                         NewWallhackHighlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
                         NewWallhackHighlight.Adornee = WallhackCharacter
-                        NewWallhackHighlight.FillColor = Settings.WallhackFillColor
-                        NewWallhackHighlight.OutlineColor = Settings.WallhackOutlineColor
-                        NewWallhackHighlight.OutlineTransparency = Settings.WallhackOutlineTransparency
-                        NewWallhackHighlight.FillTransparency = Settings.WallhackFillTransparency
-                    elseif WallhackHighlight:IsA("Highlight") and WallhackHighlight.Name == "WallhackHighlight777" then
-                        local NewWallhackHighlight = WallhackCharacter:FindFirstChild("WallhackHighlight777")
-                        NewWallhackHighlight.FillColor = Color3.fromRGB(Settings.WallhackFillColor)
-                        NewWallhackHighlight.OutlineColor = Color3.fromRGB(Settings.WallhackOutlineColor)
+                        NewWallhackHighlight.FillColor = Color3.fromRGB(
+                            Settings.WallhackFillColor.R, 
+                            Settings.WallhackFillColor.G, 
+                            Settings.WallhackFillColor.B
+                        )
+                        NewWallhackHighlight.OutlineColor = Color3.fromRGB(
+                        Settings.WallhackOutlineColor.R, 
+                        Settings.WallhackOutlineColor.G, 
+                        Settings.WallhackOutlineColor.B
+                            )   
+                            NewWallhackHighlight.OutlineTransparency = Settings.WallhackOutlineTransparency
+                            NewWallhackHighlight.FillTransparency = Settings.WallhackFillTransparency
+                        elseif WallhackHighlight:IsA("Highlight") and WallhackHighlight.Name == "WallhackHighlight777" then
+                        local NewWallhackHighlight = WallhackHighlight
+                        NewWallhackHighlight.FillColor = Color3.fromRGB(
+                            Settings.WallhackFillColor.R, 
+                            Settings.WallhackFillColor.G, 
+                            Settings.WallhackFillColor.B
+                        )
+                        NewWallhackHighlight.OutlineColor = Color3.fromRGB(
+                            Settings.WallhackOutlineColor.R, 
+                            Settings.WallhackOutlineColor.G, 
+                            Settings.WallhackOutlineColor.B
+                        )
                         NewWallhackHighlight.OutlineTransparency = Settings.WallhackOutlineTransparency
                         NewWallhackHighlight.FillTransparency = Settings.WallhackFillTransparency
                     end
@@ -433,7 +449,7 @@ PlayerProperties:AddTextbox({
 	Name = "Walk Speed",
 	Value = Settings.WalkSpeed,
 	Callback = function(New, Old)
-		Settings.WalkSpeed = New
+		Settings.WalkSpeed = tonumber(New)
 	end
 }).Default = Settings.WalkSpeed
 
@@ -457,7 +473,11 @@ Float:AddTextbox({
 	Name = "Float Speed",
 	Value = Settings.FloatSpeed,
 	Callback = function(New, Old)
-		Settings.FloatSpeed = New
+		if New < 0 then
+            Settings.FloatSpeed = tonumber(Old)
+        else
+            Settings.FloatSpeed = tonumber(New)
+        end
 	end
 }).Default = Settings.FloatSpeed
 
@@ -512,9 +532,9 @@ PlayAnimation:AddTextbox({
 	Value = Settings.AnimationSpeed,
 	Callback = function(New, Old)
         if New < 0 then
-            Settings.AnimationSpeed = Old
+            Settings.AnimationSpeed = tonumber(Old)
         else
-            Settings.AnimationSpeed = New
+            Settings.AnimationSpeed = tonumber(New)
         end
 	end
 }).Default = Settings.AnimationSpeed
@@ -555,9 +575,9 @@ PlayAnimation:AddTextbox({
 	Value = Settings.SoundSpeed,
 	Callback = function(New, Old)
         if New < 0 then
-            Settings.SoundSpeed = Old
+            Settings.SoundSpeed = tonumber(Old)
         else
-            Settings.SoundSpeed = New
+            Settings.SoundSpeed = tonumber(New)
         end
 	end
 }).Default = Settings.SoundSpeed

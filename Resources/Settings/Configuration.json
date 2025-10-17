@@ -14,8 +14,8 @@
   "Toggle": false,
 
   "WallhackEnabled": false,
-  "WallhackOutlineColor": "255, 0, 0",
-  "WallhackFillColor": "255, 0, 0",
+  "WallhackOutlineColor": {"R": 255, "G": 0, "B": 0},
+  "WallhackFillColor": {"R": 255, "G": 0, "B": 0},
   "WallhackOutlineTransparency": 0,
   "WallhackFillTransparency": 0.9,
 
