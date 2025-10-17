@@ -21,16 +21,13 @@ local Parts = {"Head", "HumanoidRootPart", "Torso", "Left Arm", "Right Arm", "Le
 
 --// Frame
 
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-
 Library.UnloadCallback = Functions.Exit
 
 local MainFrame = Library:CreateWindow({
-	Name = "Universal Hacks",
+	Name = "Aimbot V2",
 	Themeable = {
 		Image = "7059346386",
-		Info = "Made by Jbito1234 and Exunys\nPowered by Pepsi's UI Library",
+		Info = "Made by Exunys\nPowered by Pepsi's UI Library",
 		Credit = false
 	},
 	Background = "",
@@ -40,15 +37,11 @@ local MainFrame = Library:CreateWindow({
 --// Tabs
 
 local SettingsTab = MainFrame:CreateTab({
-	Name = "FPS Hacks"
+	Name = "Settings"
 })
 
-local AllHacksTab = MainFrame:CreateTab({
-	Name = "All Hacks"
-})
-
-local RoleplayHacksTab = MainFrame:CreateTab({
-	Name = "Roleplay Hacks"
+local FOVSettingsTab = MainFrame:CreateTab({
+	Name = "FOV Settings"
 })
 
 local FunctionsTab = MainFrame:CreateTab({
@@ -71,11 +64,11 @@ local ThirdPerson = SettingsTab:CreateSection({
 
 --// FOV Settings - Sections
 
-local FOV_Values = SettingsTab:CreateSection({
+local FOV_Values = FOVSettingsTab:CreateSection({
 	Name = "Values"
 })
 
-local FOV_Appearance = SettingsTab:CreateSection({
+local FOV_Appearance = FOVSettingsTab:CreateSection({
 	Name = "Appearance"
 })
 
@@ -303,278 +296,3 @@ FunctionsSection:AddButton({
 		setclipboard("https://github.com/Exunys/Aimbot-V2")
 	end
 })
-
-local function ResetWallhackSettings()
-  Settings.WallhackOutlineColor = {R = 255, G = 0, B = 0}
-  Settings.WallhackFillColor = {R = 255, G = 0, B = 0}
-  Settings.WallhackOutlineTransparency = 0
-  Settings.WallhackFillTransparency = 0.9
-end
-
-local WallhackSection = SettingsTab:CreateSection({
-	Name = "Wallhack"
-})
-
-WallhackSection:AddToggle({
-	Name = "Wallhack",
-	Value = Settings.WallhackEnabled,
-	Callback = function(New, Old)
-		Settings.WallhackEnabled = New
-	end
-}).Default = Settings.WallhackEnabled
-
-WallhackSection:AddColorpicker({
-	Name = "OutlineColor",
-	Value = Settings.WallhackOutlineColor,
-	Callback = function(New, Old)
-		Settings.WallhackOutlineColor = New
-	end
-}).Default = Settings.WallhackOutlineColor
-
-WallhackSection:AddColorpicker({
-	Name = "FillColor",
-	Value = Settings.WallhackFillColor,
-	Callback = function(New, Old)
-		Settings.WallhackFillColor = New
-	end
-}).Default = Settings.WallhackFillColor
-
-WallhackSection:AddSlider({
-	Name = "OutlineTransparency",
-	Value = Settings.OutlineTransparency,
-	Callback = function(New, Old)
-		Settings.OutlineTransparency = New
-	end,
-	Min = 0,
-	Max = 1,
-    Decimal = 2
-}).Default = Settings.OutlineTransparency
-
-WallhackSection:AddSlider({
-	Name = "FillTransparency",
-	Value = Settings.WallhackFillTransparency,
-	Callback = function(New, Old)
-		Settings.WallhackFillTransparency = New
-	end,
-	Min = 0,
-	Max = 1,
-    Decimal = 2
-}).Default = Settings.WallhackFillTransparency
-
-WallhackSection:AddButton({
-	Name = "Reset Wallhack Settings",
-	Callback = function()
-		ResetWallhackSettings()
-	end
-})
-
-task.spawn(function()
-	while task.wait() do
-		for _, WallhackPlayer in ipairs(Players:GetPlayers()) do
-			if WallhackPlayer ~= LocalPlayer and Settings.WallhackEnabled then
-				local WallhackCharacter = WallhackPlayer.Character or WallhackPlayer.CharacterAdded
-				if WallhackCharacter then
-					for _, h in ipairs(WallhackCharacter:GetDescendants()) do
-						if h:IsA("Highlight") and h.Name ~= "WallhackHighlight777" then
-							h:Destroy()
-						end
-					end
-
-					local Highlight = WallhackCharacter:FindFirstChild("WallhackHighlight777")
-
-					-- Cria o highlight se não existir
-					if not Highlight then
-						Highlight = Instance.new("Highlight")
-						Highlight.Name = "WallhackHighlight777"
-						Highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-						Highlight.Adornee = WallhackCharacter
-						Highlight.Parent = WallhackCharacter
-					end
-
-					-- Atualiza propriedades constantemente
-					Highlight.FillColor = Color3.fromRGB(
-						Settings.WallhackFillColor.R,
-						Settings.WallhackFillColor.G,
-						Settings.WallhackFillColor.B
-					)
-					Highlight.OutlineColor = Color3.fromRGB(
-						Settings.WallhackOutlineColor.R,
-						Settings.WallhackOutlineColor.G,
-						Settings.WallhackOutlineColor.B
-					)
-					Highlight.OutlineTransparency = Settings.WallhackOutlineTransparency
-					Highlight.FillTransparency = Settings.WallhackFillTransparency
-				end
-			end
-		end
-	end
-end)
-
--- All Hacks/Roleplay Hacks
-local PlayerProperties = SettingsTab:CreateSection({
-	Name = "Player Properties"
-})
-
-local Float = SettingsTab:CreateSection({
-	Name = "Float"
-})
-
-local Noclip = SettingsTab:CreateSection({
-	Name = "Noclip"
-})
-
-local PlayAnimation = RoleplayHacksTab:CreateSection({
-	Name = "Play Animation"
-})
-
-local PlaySound = RoleplayHacksTab:CreateSection({
-	Name = "Play Sound"
-})
-
-PlayerProperties:AddSlider({
-	Name = "FOV",
-	Value = Settings.FOV,
-	Callback = function(New, Old)
-		Settings.FOV = New
-	end,
-	Min = 1,
-	Max = 120,
-    Decimal = 0
-}).Default = Settings.FOV
-
-PlayerProperties:AddTextbox({
-	Name = "Walk Speed",
-	Value = Settings.WalkSpeed,
-	Callback = function(New, Old)
-		Settings.WalkSpeed = tonumber(New)
-	end
-}).Default = Settings.WalkSpeed
-
-PlayerProperties:AddTextbox({
-	Name = "Jump Height",
-	Value = Settings.JumpHeight,
-	Callback = function(New, Old)
-		Settings.JumpHeight = New
-	end
-}).Default = Settings.JumpHeight
-
-Float:AddToggle({
-	Name = "Float Enabled",
-	Value = Settings.FloatEnabled,
-	Callback = function(New, Old)
-		Settings.FloatEnabled = New
-	end
-}).Default = Settings.FloatEnabled
-
-Float:AddTextbox({
-	Name = "Float Speed",
-	Value = Settings.FloatSpeed,
-	Callback = function(New, Old)
-		if tonumber(New) < 0 then
-            Settings.FloatSpeed = tonumber(Old)
-        else
-            Settings.FloatSpeed = tonumber(New)
-        end
-	end
-}).Default = Settings.FloatSpeed
-
-Float:AddToggle({
-	Name = "Auto Activate Noclip",
-	Value = Settings.AutoActivateNoclip,
-	Callback = function(New, Old)
-		Settings.AutoActivateNoclip = New
-	end
-}).Default = Settings.AutoActivateNoclip
-
-Noclip:AddToggle({
-	Name = "Noclip Enabled",
-	Value = Settings.NoclipEnabled,
-	Callback = function(New, Old)
-		Settings.NoclipEnabled = New
-	end
-}).Default = Settings.NoclipEnabled
-
-PlayAnimation:AddTextbox({
-	Name = "Animation Id",
-	Value = Settings.AnimationId,
-	Callback = function(New, Old)
-		Settings.AnimationId = New
-	end
-}).Default = Settings.AnimationId
-
-PlayAnimation:AddSlider({
-	Name = "Animation Time Position",
-	Value = Settings.AnimationTimePosition,
-	Callback = function(New, Old)
-		Settings.AnimationTimePosition = New
-	end,
-	Min = 0,
-	Max = 1,
-    Decimal = 3
-}).Default = Settings.AnimationTimePosition
-
-PlayAnimation:AddSlider({
-	Name = "Animation Weight",
-	Value = Settings.AnimationWeight,
-	Callback = function(New, Old)
-		Settings.AnimationWeight = New
-	end,
-	Min = 0,
-	Max = 1,
-    Decimal = 2
-}).Default = Settings.AnimationWeight
-
-PlayAnimation:AddTextbox({
-	Name = "Animation Speed",
-	Value = Settings.AnimationSpeed,
-	Callback = function(New, Old)
-        if tonumber(New) < 0 then
-            Settings.AnimationSpeed = tonumber(Old)
-        else
-            Settings.AnimationSpeed = tonumber(New)
-        end
-	end
-}).Default = Settings.AnimationSpeed
-
--- Sound
-PlayAnimation:AddTextbox({
-	Name = "Sound Id",
-	Value = Settings.SoundId,
-	Callback = function(New, Old)
-		Settings.SoundId = New
-	end
-}).Default = Settings.SoundId
-
-PlayAnimation:AddSlider({
-	Name = "Sound Time Position",
-	Value = Settings.SoundTimePosition,
-	Callback = function(New, Old)
-		Settings.SoundTimePosition = New
-	end,
-	Min = 0,
-	Max = 1,
-    Decimal = 3
-}).Default = Settings.SoundTimePosition
-
-PlayAnimation:AddSlider({
-	Name = "Sound Volume",
-	Value = Settings.SoundVolume,
-	Callback = function(New, Old)
-		Settings.SoundVolume = New
-	end,
-	Min = 0,
-	Max = 10,
-    Decimal = 1
-}).Default = Settings.SoundVolume
-
-PlayAnimation:AddTextbox({
-	Name = "Sound Speed",
-	Value = Settings.SoundSpeed,
-	Callback = function(New, Old)
-        if tonumber(New) < 0 then
-            Settings.SoundSpeed = tonumber(Old)
-        else
-            Settings.SoundSpeed = tonumber(New)
-        end
-	end
-}).Default = Settings.SoundSpeed
