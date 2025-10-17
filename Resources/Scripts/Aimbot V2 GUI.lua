@@ -368,45 +368,47 @@ WallhackSection:AddButton({
 	end
 })
 
-while task.wait(0.1) do
-	for _, WallhackPlayer in ipairs(Players:GetPlayers()) do
-		if WallhackPlayer ~= LocalPlayer and Settings.WallhackEnabled then
-			local WallhackCharacter = WallhackPlayer.Character
-			if WallhackCharacter then
-				local Highlight = WallhackCharacter:FindFirstChild("WallhackHighlight777")
-
-				for _, h in ipairs(WallhackCharacter:GetDescendants()) do
-					if h:IsA("Highlight") and h.Name ~= "WallhackHighlight777" then
-						h:Destroy()
+task.spawn(function()
+	while task.wait(0.1) do
+		for _, WallhackPlayer in ipairs(Players:GetPlayers()) do
+			if WallhackPlayer ~= LocalPlayer and Settings.WallhackEnabled then
+				local WallhackCharacter = WallhackPlayer.Character or WallhackPlayer.CharacterAdded
+				if WallhackCharacter then
+					for _, h in ipairs(WallhackCharacter:GetDescendants()) do
+						if h:IsA("Highlight") and h.Name ~= "WallhackHighlight777" then
+							h:Destroy()
+						end
 					end
-				end
 
-				-- Cria o highlight se não existir
-				if not Highlight then
-					Highlight = Instance.new("Highlight")
-					Highlight.Name = "WallhackHighlight777"
-					Highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-					Highlight.Adornee = WallhackCharacter
-					Highlight.Parent = WallhackCharacter
-				end
+					local Highlight = WallhackCharacter:FindFirstChild("WallhackHighlight777")
 
-				-- Atualiza propriedades constantemente
-				Highlight.FillColor = Color3.fromRGB(
-					Settings.WallhackFillColor.R,
-					Settings.WallhackFillColor.G,
-					Settings.WallhackFillColor.B
-				)
-				Highlight.OutlineColor = Color3.fromRGB(
-					Settings.WallhackOutlineColor.R,
-					Settings.WallhackOutlineColor.G,
-					Settings.WallhackOutlineColor.B
-				)
-				Highlight.OutlineTransparency = Settings.WallhackOutlineTransparency
-				Highlight.FillTransparency = Settings.WallhackFillTransparency
+					-- Cria o highlight se não existir
+					if not Highlight then
+						Highlight = Instance.new("Highlight")
+						Highlight.Name = "WallhackHighlight777"
+						Highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+						Highlight.Adornee = WallhackCharacter
+						Highlight.Parent = WallhackCharacter
+					end
+
+					-- Atualiza propriedades constantemente
+					Highlight.FillColor = Color3.fromRGB(
+						Settings.WallhackFillColor.R,
+						Settings.WallhackFillColor.G,
+						Settings.WallhackFillColor.B
+					)
+					Highlight.OutlineColor = Color3.fromRGB(
+						Settings.WallhackOutlineColor.R,
+							Settings.WallhackOutlineColor.G,
+						Settings.WallhackOutlineColor.B
+					)
+					Highlight.OutlineTransparency = Settings.WallhackOutlineTransparency
+					Highlight.FillTransparency = Settings.WallhackFillTransparency
+				end
 			end
 		end
 	end
-end
+end)
 
 -- All Hacks/Roleplay Hacks
 local PlayerProperties = SettingsTab:CreateSection({
