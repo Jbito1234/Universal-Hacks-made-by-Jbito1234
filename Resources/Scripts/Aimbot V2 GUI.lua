@@ -21,6 +21,9 @@ local Parts = {"Head", "HumanoidRootPart", "Torso", "Left Arm", "Right Arm", "Le
 
 --// Frame
 
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
 Library.UnloadCallback = Functions.Exit
 
 local MainFrame = Library:CreateWindow({
@@ -344,7 +347,7 @@ WallhackSection:AddSlider({
 	end,
 	Min = 0,
 	Max = 1,
-    Decimals = 2
+    Decimal = 2
 }).Default = Settings.OutlineTransparency
 
 WallhackSection:AddSlider({
@@ -355,7 +358,7 @@ WallhackSection:AddSlider({
 	end,
 	Min = 0,
 	Max = 1,
-    Decimals = 2
+    Decimal = 2
 }).Default = Settings.WallhackFillTransparency
 
 WallhackSection:AddButton({
@@ -442,7 +445,7 @@ PlayerProperties:AddSlider({
 	end,
 	Min = 1,
 	Max = 120,
-    Decimals = 0
+    Decimal = 0
 }).Default = Settings.FOV
 
 PlayerProperties:AddTextbox({
@@ -473,7 +476,7 @@ Float:AddTextbox({
 	Name = "Float Speed",
 	Value = Settings.FloatSpeed,
 	Callback = function(New, Old)
-		if New < 0 then
+		if tonumber(New) < 0 then
             Settings.FloatSpeed = tonumber(Old)
         else
             Settings.FloatSpeed = tonumber(New)
@@ -513,7 +516,7 @@ PlayAnimation:AddSlider({
 	end,
 	Min = 0,
 	Max = 1,
-    Decimals = 3
+    Decimal = 3
 }).Default = Settings.AnimationTimePosition
 
 PlayAnimation:AddSlider({
@@ -524,14 +527,14 @@ PlayAnimation:AddSlider({
 	end,
 	Min = 0,
 	Max = 1,
-    Decimals = 2
+    Decimal = 2
 }).Default = Settings.AnimationWeight
 
 PlayAnimation:AddTextbox({
 	Name = "Animation Speed",
 	Value = Settings.AnimationSpeed,
 	Callback = function(New, Old)
-        if New < 0 then
+        if tonumber(New) < 0 then
             Settings.AnimationSpeed = tonumber(Old)
         else
             Settings.AnimationSpeed = tonumber(New)
@@ -556,7 +559,7 @@ PlayAnimation:AddSlider({
 	end,
 	Min = 0,
 	Max = 1,
-    Decimals = 3
+    Decimal = 3
 }).Default = Settings.SoundTimePosition
 
 PlayAnimation:AddSlider({
@@ -567,14 +570,14 @@ PlayAnimation:AddSlider({
 	end,
 	Min = 0,
 	Max = 10,
-    Decimals = 1
+    Decimal = 1
 }).Default = Settings.SoundVolume
 
 PlayAnimation:AddTextbox({
 	Name = "Sound Speed",
 	Value = Settings.SoundSpeed,
 	Callback = function(New, Old)
-        if New < 0 then
+        if tonumber(New) < 0 then
             Settings.SoundSpeed = tonumber(Old)
         else
             Settings.SoundSpeed = tonumber(New)
