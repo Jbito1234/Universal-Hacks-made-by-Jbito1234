@@ -375,7 +375,7 @@ while task.wait(0.1) do
 			if WallhackCharacter then
 				local Highlight = WallhackCharacter:FindFirstChild("WallhackHighlight777")
 
-				for _, h in ipairs(WallhackCharacter:GetDescendants())
+				for _, h in ipairs(WallhackCharacter:GetDescendants()) do
 					if h:IsA("Highlight") and h.Name ~= "WallhackHighlight777" then
 						h:Destroy()
 					end
