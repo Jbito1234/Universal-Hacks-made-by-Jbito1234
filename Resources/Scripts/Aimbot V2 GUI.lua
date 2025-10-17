@@ -399,7 +399,7 @@ task.spawn(function()
 					)
 					Highlight.OutlineColor = Color3.fromRGB(
 						Settings.WallhackOutlineColor.R,
-							Settings.WallhackOutlineColor.G,
+						Settings.WallhackOutlineColor.G,
 						Settings.WallhackOutlineColor.B
 					)
 					Highlight.OutlineTransparency = Settings.WallhackOutlineTransparency
