@@ -369,51 +369,44 @@ WallhackSection:AddButton({
 })
 
 while task.wait(0.1) do
-    for _, WallhackPlayer in ipairs(Players:GetPlayers()) do
-        if WallhackPlayer ~= LocalPlayer then
-            local WallhackCharacter = WallhackPlayer.Character or WallhackPlayer.CharacterAdded:Wait()
+	for _, WallhackPlayer in ipairs(Players:GetPlayers()) do
+		if WallhackPlayer ~= LocalPlayer and Settings.WallhackEnabled then
+			local WallhackCharacter = WallhackPlayer.Character
+			if WallhackCharacter then
+				local Highlight = WallhackCharacter:FindFirstChild("WallhackHighlight777")
 
-            if WallhackCharacter then
-                for _, WallhackHighlight in ipairs(WallhackCharacter:GetChildren()) do
-                    if WallhackHighlight:IsA("Highlight") and WallhackHighlight.Name ~= "WallhackHighlight777" then
-                        WallhackHighlight:Destroy()
-                    elseif WallhackHighlight:IsA("Highlight") and WallhackHighlight.Name == "WallhackHighlight777" and not WallhackCharacter:FindFirstChild("WallhackHighlight777") then
-                        local NewWallhackHighlight = Instance.new("Highlight")
-                        NewWallhackHighlight.Name = "WallhackHighlight777"
-                        NewWallhackHighlight.Parent = WallhackCharacter
-                        NewWallhackHighlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-                        NewWallhackHighlight.Adornee = WallhackCharacter
-                        NewWallhackHighlight.FillColor = Color3.fromRGB(
-                            Settings.WallhackFillColor.R, 
-                            Settings.WallhackFillColor.G, 
-                            Settings.WallhackFillColor.B
-                        )
-                        NewWallhackHighlight.OutlineColor = Color3.fromRGB(
-                        Settings.WallhackOutlineColor.R, 
-                        Settings.WallhackOutlineColor.G, 
-                        Settings.WallhackOutlineColor.B
-                            )   
-                            NewWallhackHighlight.OutlineTransparency = Settings.WallhackOutlineTransparency
-                            NewWallhackHighlight.FillTransparency = Settings.WallhackFillTransparency
-                        elseif WallhackHighlight:IsA("Highlight") and WallhackHighlight.Name == "WallhackHighlight777" then
-                        local NewWallhackHighlight = WallhackHighlight
-                        NewWallhackHighlight.FillColor = Color3.fromRGB(
-                            Settings.WallhackFillColor.R, 
-                            Settings.WallhackFillColor.G, 
-                            Settings.WallhackFillColor.B
-                        )
-                        NewWallhackHighlight.OutlineColor = Color3.fromRGB(
-                            Settings.WallhackOutlineColor.R, 
-                            Settings.WallhackOutlineColor.G, 
-                            Settings.WallhackOutlineColor.B
-                        )
-                        NewWallhackHighlight.OutlineTransparency = Settings.WallhackOutlineTransparency
-                        NewWallhackHighlight.FillTransparency = Settings.WallhackFillTransparency
-                    end
-                end
-            end
-        end
-    end
+				-- Cria o highlight se não existir
+				if not Highlight then
+					Highlight = Instance.new("Highlight")
+					Highlight.Name = "WallhackHighlight777"
+					Highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+					Highlight.Adornee = WallhackCharacter
+					Highlight.Parent = WallhackCharacter
+				end
+
+				-- Atualiza propriedades constantemente
+				Highlight.FillColor = Color3.fromRGB(
+					Settings.WallhackFillColor.R,
+					Settings.WallhackFillColor.G,
+					Settings.WallhackFillColor.B
+				)
+				Highlight.OutlineColor = Color3.fromRGB(
+					Settings.WallhackOutlineColor.R,
+					Settings.WallhackOutlineColor.G,
+					Settings.WallhackOutlineColor.B
+				)
+				Highlight.OutlineTransparency = Settings.WallhackOutlineTransparency
+				Highlight.FillTransparency = Settings.WallhackFillTransparency
+			end
+		else
+			-- Remove o highlight se o wallhack estiver desligado
+			local Char = WallhackPlayer.Character
+			if Char then
+				local Old = Char:FindFirstChild("WallhackHighlight777")
+				if Old then Old:Destroy() end
+			end
+		end
+	end
 end
 
 -- All Hacks/Roleplay Hacks
