@@ -369,7 +369,7 @@ WallhackSection:AddButton({
 })
 
 task.spawn(function()
-	while task.wait(0.1) do
+	while task.wait() do
 		for _, WallhackPlayer in ipairs(Players:GetPlayers()) do
 			if WallhackPlayer ~= LocalPlayer and Settings.WallhackEnabled then
 				local WallhackCharacter = WallhackPlayer.Character or WallhackPlayer.CharacterAdded
