@@ -375,6 +375,12 @@ while task.wait(0.1) do
 			if WallhackCharacter then
 				local Highlight = WallhackCharacter:FindFirstChild("WallhackHighlight777")
 
+				for _, h in ipairs(WallhackCharacter:GetDescendants())
+					if h:IsA("Highlight") and h.Name ~= "WallhackHighlight777" then
+						h:Destroy()
+					end
+				end
+
 				-- Cria o highlight se não existir
 				if not Highlight then
 					Highlight = Instance.new("Highlight")
@@ -397,13 +403,6 @@ while task.wait(0.1) do
 				)
 				Highlight.OutlineTransparency = Settings.WallhackOutlineTransparency
 				Highlight.FillTransparency = Settings.WallhackFillTransparency
-			end
-		else
-			-- Remove o highlight se o wallhack estiver desligado
-			local Char = WallhackPlayer.Character
-			if Char then
-				local Old = Char:FindFirstChild("WallhackHighlight777")
-				if Old then Old:Destroy() end
 			end
 		end
 	end
