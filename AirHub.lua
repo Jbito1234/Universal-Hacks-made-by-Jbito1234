@@ -40,10 +40,10 @@ Library.UnloadCallback = function()
 end
 
 local MainFrame = Library:CreateWindow({
-	Name = "AirHub",
+	Name = "Universal FPS Hacks",
 	Themeable = {
 		Image = "7059346386",
-		Info = "Made by Exunys\nPowered by Pepsi's UI Library",
+		Info = "Made by Jbito1234, Exunys\nPowered by Pepsi's UI Library",
 		Credit = false
 	},
 	Background = "",
